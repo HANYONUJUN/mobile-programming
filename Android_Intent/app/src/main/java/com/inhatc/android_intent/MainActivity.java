@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button btnAnimal;
+    private Toast objToast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +24,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v){
         if(v == btnAnimal){
            Intent cowIntent = new Intent(MainActivity.this, CowActivity.class);
-           startActivity(cowIntent);
+           //startActivity(cowIntent);
+            startActivityForResult(cowIntent,1);
+        }
+    }
+    @Override
+    protected  void onActivityResult (int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        
+        if(requestCode == 1){
+            String strData =data.getStringExtra("Animal_Sound");
+            objToast =Toast.makeText(this, strData, Toast.LENGTH_LONG);
+            objToast.show();
         }
     }
 }
